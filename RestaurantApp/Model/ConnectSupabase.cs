@@ -13,8 +13,6 @@ namespace RestaurantApp
     public class ConnectSupabase
     {
         public string sError;
-        private string supabaseUrl = "https://qkhoblgvgddsgseybnge.supabase.co";
-        private string supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFraG9ibGd2Z2Rkc2dzZXlibmdlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyNzU3NjgsImV4cCI6MjA4OTg1MTc2OH0.mgl09qDBWC5ovWxWQ0iSojLl8hM6-hOUAzaoSl04RBM";
         public static Supabase.Client _client;
 
         public async Task Connect()
@@ -24,7 +22,7 @@ namespace RestaurantApp
                 if (_client == null)
                 {
                     var options = new Supabase.SupabaseOptions { Schema = "MakosSushi" };
-                    _client = new Supabase.Client(supabaseUrl, supabaseKey, options);
+                    _client = new Supabase.Client(Secrets.supabaseUrl, Secrets.supabaseKey, options);
                     await _client.InitializeAsync();
                 }
 
