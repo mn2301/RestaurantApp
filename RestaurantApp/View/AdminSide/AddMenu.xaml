@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             x:Class="RestaurantApp.AddMenu"
+             Title="Agregar artículo"
+             BackgroundColor="#131313">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="30">
+            <ActivityIndicator x:Name="activInd" IsVisible="False" IsRunning="false" SemanticProperties.Description="Loading" Color="#74A173" />
+            <!-- Mostrar imagen y nombre -->
+            <VerticalStackLayout HorizontalOptions="Center" Spacing="15" Margin="0, 20">
+                <!-- Imagen -->
+                <Border Padding="0" WidthRequest="120" HeightRequest="120" HorizontalOptions="Center" BackgroundColor="#1C1B1B">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="60" />
+                    </Border.StrokeShape>
+
+                    <Image x:Name="imgItem" Aspect="AspectFill"/>
+                </Border>
+
+                <!-- Nombre de item -->
+                <Label x:Name="lblName" TextColor="#E5E2E1" FontSize="28" FontAttributes="Bold" FontFamily="ZalandoSans" CharacterSpacing="1" HorizontalOptions="Center"/>
+            </VerticalStackLayout>
+
+            <!-- Información principal -->
+            <Border BackgroundColor="#1C1B1B" Stroke="#1C1B1B" Padding="20">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="28" />
+                </Border.StrokeShape>
+                <VerticalStackLayout Spacing="20">
+                    <!-- Nombre -->
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="NOMBRE" Margin="5,0,0,0" TextColor="#74A173" FontSize="12" FontFamily="ZalandoSans" FontAttributes="Bold" CharacterSpacing="2"/>
+                        <Border Padding="15" BackgroundColor="#2A2A2A" Stroke="#1C1B1B">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="20" />
+                            </Border.StrokeShape>
+
+                            <Entry x:Name="enName" TextColor="#E5E2E1" BackgroundColor="Transparent" FontFamily="ZalandoSans" TextChanged="enName_TextChanged"/>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <!-- Descripción -->
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="DESCRIPCIÓN" Margin="5,0,0,0" TextColor="#74A173" FontSize="12" FontFamily="ZalandoSans" FontAttributes="Bold" CharacterSpacing="2"/>
+                        <Border Padding="15" BackgroundColor="#2A2A2A" Stroke="#1C1B1B">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="20" />
+                            </Border.StrokeShape>
+
+                            <Editor x:Name="enDescription" TextColor="#E5E2E1" FontFamily="ZalandoSans" BackgroundColor="Transparent" AutoSize="TextChanges"/>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <!-- Imágen -->
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="URL DE IMÁGEN" Margin="5,0,0,0" TextColor="#74A173" FontSize="12" FontFamily="ZalandoSans" FontAttributes="Bold" CharacterSpacing="2"/>
+                        <Border Padding="15" BackgroundColor="#2A2A2A" Stroke="#1C1B1B">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="20" />
+                            </Border.StrokeShape>
+
+                            <Button x:Name="btnUpload" Text="SUBIR IMAGEN" CornerRadius="18" BackgroundColor="#74A173" TextColor="#131313" FontFamily="ZalandoSans" Clicked="btnUpload_Clicked"/>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <!-- Precio y  Tipo -->
+                    <HorizontalStackLayout>
+                        <!-- Precio -->
+                        <VerticalStackLayout Spacing="8">
+                            <Label Text="PRECIO" Margin="5,0,0,0" TextColor="#74A173" FontSize="12" FontFamily="ZalandoSans" FontAttributes="Bold" CharacterSpacing="2"/>
+                            <Border Padding="15" BackgroundColor="#2A2A2A" Stroke="#1C1B1B" WidthRequest="150">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="20" />
+                                </Border.StrokeShape>
+
+                                <Entry x:Name="enPrice" Keyboard="Numeric" TextColor="#E5E2E1" BackgroundColor="Transparent" FontFamily="ZalandoSans"/>
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <!-- Tipo -->
+                        <VerticalStackLayout Spacing="8" Margin="10,0,0,0" WidthRequest="165">
+                            <Label Text="TIPO" Margin="5,0,0,0" TextColor="#74A173" FontSize="12" FontFamily="ZalandoSans" FontAttributes="Bold" CharacterSpacing="2"/>
+                            <Border Padding="15" BackgroundColor="#2A2A2A" Stroke="#1C1B1B">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="20" />
+                                </Border.StrokeShape>
+
+                                <Picker x:Name="pkType" Title="Seleccione" TitleColor="#E5E2E1" TextColor="Black" BackgroundColor="Transparent" FontFamily="ZalandoSans" SelectedIndexChanged="pkType_SelectedIndexChanged">
+                                    <Picker.ItemsSource>
+                                        <x:Array Type="{x:Type x:String}">
+                                            <x:String>Sushi</x:String>
+                                            <x:String>Bebida</x:String>
+                                        </x:Array>
+                                    </Picker.ItemsSource>
+                                </Picker>
+                            </Border>
+                        </VerticalStackLayout>
+                    </HorizontalStackLayout>
+
+                    <!-- Caractrísticas -->
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="CARACTERÍSTICAS" Margin="5,0,0,0" TextColor="#74A173" FontSize="12" FontFamily="ZalandoSans" FontAttributes="Bold" CharacterSpacing="2"/>
+                        <Border Padding="15" BackgroundColor="#2A2A2A" Stroke="#1C1B1B">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="20" />
+                            </Border.StrokeShape>
+
+
+                            <VerticalStackLayout>
+                                <HorizontalStackLayout x:Name="charsSushi">
+                                    <VerticalStackLayout>
+                                        <Label Text="PIEZAS" Margin="5,0,0,0" TextColor="#74A173" FontSize="12" FontFamily="ZalandoSans" FontAttributes="Bold" CharacterSpacing="2"/>
+                                        <buttons:SfRadioGroup>
+                                            <buttons:SfRadioButton x:Name="rb6" Text="6" CheckedColor="#74A173" UncheckedColor="#1C1B1B" TextColor="#E5E2E1" FontFamily="ZalandoSans"/>
+                                            <buttons:SfRadioButton x:Name="rb8" Text="8" CheckedColor="#74A173" UncheckedColor="#1C1B1B" TextColor="#E5E2E1" FontFamily="ZalandoSans"/>
+                                            <buttons:SfRadioButton x:Name="rb12" Text="12" CheckedColor="#74A173" UncheckedColor="#1C1B1B" TextColor="#E5E2E1" FontFamily="ZalandoSans"/>
+                                        </buttons:SfRadioGroup>
+                                    </VerticalStackLayout>
+
+                                    <VerticalStackLayout Margin="50,0,0,0">
+                                        <Label Text="DIETA" Margin="5,0,0,0" TextColor="#74A173" FontSize="12" FontFamily="ZalandoSans" FontAttributes="Bold" CharacterSpacing="2"/>
+                                        <buttons:SfRadioGroup>
+                                            <buttons:SfRadioButton x:Name="rbVeg" Text="Vegetariano" CheckedColor="#74A173" UncheckedColor="#1C1B1B" TextColor="#E5E2E1" FontFamily="ZalandoSans"/>
+                                            <buttons:SfRadioButton x:Name="rbNoSea" Text="Sin marisco" CheckedColor="#74A173" UncheckedColor="#1C1B1B" TextColor="#E5E2E1" FontFamily="ZalandoSans"/>
+                                            <buttons:SfRadioButton x:Name="rbNothing" Text="Ninguno" CheckedColor="#74A173" UncheckedColor="#1C1B1B" TextColor="#E5E2E1" FontFamily="ZalandoSans"/>
+                                        </buttons:SfRadioGroup>
+                                    </VerticalStackLayout>
+                                </HorizontalStackLayout>
+
+                                <HorizontalStackLayout x:Name="charsDrink" IsVisible="False">
+                                    <VerticalStackLayout>
+                                        <Label Text="CONTENIDO ALCOHÓLICO" Margin="5,0,0,0" TextColor="#74A173" FontSize="12" FontFamily="ZalandoSans" FontAttributes="Bold" CharacterSpacing="2"/>
+                                        <buttons:SfRadioGroup>
+                                            <buttons:SfRadioButton x:Name="rbAlc" Text="Con alcohol" CheckedColor="#74A173" UncheckedColor="#1C1B1B" TextColor="#E5E2E1" FontFamily="ZalandoSans"/>
+                                            <buttons:SfRadioButton x:Name="rbNoAlc" Text="Sin alcohol" CheckedColor="#74A173" UncheckedColor="#1C1B1B" TextColor="#E5E2E1" FontFamily="ZalandoSans"/>
+                                        </buttons:SfRadioGroup>
+                                    </VerticalStackLayout>
+                                </HorizontalStackLayout>
+                            </VerticalStackLayout>
+                        </Border>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Save button -->
+            <Button Text="GUARDAR" x:Name="btnSave" BackgroundColor="#74A173" TextColor="#131313" CornerRadius="28" HeightRequest="56" FontFamily="ZalandoSans" FontAttributes="Bold" Clicked="btnSave_Clicked"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

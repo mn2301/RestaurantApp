@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RestaurantApp.MyInfo"
+             Title="Mi información"
+             BackgroundColor="#131313">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="30">
+            <ActivityIndicator x:Name="activInd" IsVisible="False" IsRunning="false" SemanticProperties.Description="Loading" Color="#74A173" />
+            <!-- Google profile info -->
+            <VerticalStackLayout HorizontalOptions="Center" Spacing="15" Margin="0, 20">
+                <!-- Image -->
+                <Border Padding="0" WidthRequest="120" HeightRequest="120" HorizontalOptions="Center" BackgroundColor="#1C1B1B">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="60" />
+                    </Border.StrokeShape>
+
+                    <Image Source="{Binding clientImageURL}" Aspect="AspectFill"/>
+                </Border>
+
+                <!-- Nombre de usuario -->
+                <Label Text="{Binding clientName}" TextColor="#E5E2E1" FontSize="28" FontAttributes="Bold" FontFamily="ZalandoSans" CharacterSpacing="1" HorizontalOptions="Center"/>
+            </VerticalStackLayout>
+
+            <!-- User input -->
+            <Border BackgroundColor="#1C1B1B" Stroke="#1C1B1B" Padding="20">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="28" />
+                </Border.StrokeShape>
+                <VerticalStackLayout Spacing="20">
+                    <!-- Dirección -->
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="DIRECCIÓN" Margin="5,0,0,0" TextColor="#74A173" FontSize="12" FontFamily="ZalandoSans" FontAttributes="Bold" CharacterSpacing="2"/>
+                        <Border Padding="15" BackgroundColor="#2A2A2A" Stroke="#1C1B1B">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="20" />
+                            </Border.StrokeShape>
+                            <Grid ColumnDefinitions="*, Auto">
+                                <Editor x:Name="enAddress" Text="{Binding clientAddress}" TextColor="#E5E2E1" BackgroundColor="Transparent" FontFamily="ZalandoSans" AutoSize="TextChanges"/>
+                                <Image Grid.Column="1" Source="location.png" HeightRequest="20" Opacity="0.5"/>
+                            </Grid>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <!-- Número de teléfono -->
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="NÚMERO DE TELÉFONO" Margin="5,0,0,0" TextColor="#74A173" FontSize="12" FontFamily="ZalandoSans" FontAttributes="Bold" CharacterSpacing="2"/>
+                        <Border Padding="15" BackgroundColor="#2A2A2A" Stroke="#1C1B1B">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="20" />
+                            </Border.StrokeShape>
+                            <Grid ColumnDefinitions="*, Auto">
+                                <Entry x:Name="enPhone" Text="{Binding clientPhone}" Keyboard="Telephone" TextColor="#E5E2E1" FontFamily="ZalandoSans" BackgroundColor="Transparent" MaxLength="10"/>
+                                <Image Grid.Column="1" Source="phone.png" HeightRequest="20" Opacity="0.5"/>
+                            </Grid>
+                        </Border>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Save button -->
+            <Button Text="GUARDAR" x:Name="btnSave" BackgroundColor="#74A173" TextColor="#131313" CornerRadius="28" HeightRequest="56" FontFamily="ZalandoSans" FontAttributes="Bold" Clicked="btnSave_Clicked"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

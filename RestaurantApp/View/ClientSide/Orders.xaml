@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:syncfusion="clr-namespace:Syncfusion.Maui.DataGrid;assembly=Syncfusion.Maui.DataGrid"
+             xmlns:converters="clr-namespace:RestaurantApp.Converters"
+             x:Class="RestaurantApp.Orders"
+             Title="Mis pedidos"
+             BackgroundColor="#131313">
+    
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:StringToBoolConverter x:Key="StringToBoolConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto, *, Auto">
+        <!-- Header -->
+        <VerticalStackLayout Grid.Row="0" Padding="20, 10" Spacing="5">
+            <Label Text="Su orden" TextColor="#E5E2E1" FontFamily="ZalandoSans" FontSize="28" FontAttributes="Bold"/>
+        </VerticalStackLayout>
+
+        <!-- Grid de carrito -->
+        <syncfusion:SfDataGrid Grid.Row="1" x:Name="cartGrid" AutoGenerateColumnsMode="None" ColumnWidthMode="Fill" HeaderRowHeight="50" RowHeight="100" SelectionMode="None" BackgroundColor="Transparent" HorizontalScrollBarVisibility="Never" VerticalScrollBarVisibility="Always">
+            <syncfusion:SfDataGrid.DefaultStyle>
+                <syncfusion:DataGridStyle HeaderRowBackground="#1C1B1B" HeaderRowTextColor="#74A173" RowTextColor="#E5E2E1" RowFontSize="14" HeaderRowFontSize="12" HeaderRowFontAttributes="Bold"/>
+            </syncfusion:SfDataGrid.DefaultStyle>
+
+            <syncfusion:SfDataGrid.Columns>
+                <syncfusion:DataGridTemplateColumn HeaderText="ITEM" HeaderTextAlignment="Start">
+                    <syncfusion:DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid ColumnDefinitions="Auto, *" Padding="5,0,0,0" ColumnSpacing="10" VerticalOptions="Center">
+                                <Border Grid.Column="0" HeightRequest="40" WidthRequest="40" StrokeShape="RoundRectangle 8">
+                                    <Image Source="{Binding imageUrl}" Aspect="AspectFill"/>
+                                </Border>
+                                <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Fill" Padding="0,5" Spacing="2">
+                                    <Label Text="{Binding name}" LineBreakMode="WordWrap" MaxLines="5" HorizontalOptions="Fill" FontAttributes="Bold" TextColor="#E5E2E1" FontSize="15"/>
+                                    <Label Text="{Binding comments}" LineBreakMode="WordWrap" TextColor="#74A173" FontSize="11" IsVisible="{Binding comments, Converter={StaticResource StringToBoolConverter}}"/>
+                                </VerticalStackLayout>
+                            </Grid>
+                        </DataTemplate>
+                    </syncfusion:DataGridTemplateColumn.CellTemplate>
+                </syncfusion:DataGridTemplateColumn>
+
+                <syncfusion:DataGridTemplateColumn HeaderText="#" HeaderTextAlignment="Center">
+                    <syncfusion:DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <HorizontalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="12">
+                                <Button x:Name="btnLess" Text="−" BackgroundColor="Transparent" TextColor="#74A173" FontSize="20" Clicked="btnLess_Clicked" CommandParameter="{Binding .}"/>
+
+                                <Label Text="{Binding quantity}" TextColor="#E5E2E1" VerticalOptions="Center" FontSize="16"/>
+
+                                <Button x:Name="btnAdd" Text="+" BackgroundColor="Transparent" TextColor="#74A173" FontSize="20" Clicked="btnAdd_Clicked" CommandParameter="{Binding .}"/>
+                            </HorizontalStackLayout>
+                        </DataTemplate>
+                    </syncfusion:DataGridTemplateColumn.CellTemplate>
+                </syncfusion:DataGridTemplateColumn>
+
+                <syncfusion:DataGridTextColumn MappingName="price" HeaderText="PRECIO" Format="C2" HeaderTextAlignment="End" CellTextAlignment="End"/>
+
+                <syncfusion:DataGridTemplateColumn Width="50">
+                    <syncfusion:DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ImageButton x:Name="btnDel" Source="trash.png" BackgroundColor="Transparent" MaximumWidthRequest="23" MaximumHeightRequest="23" HorizontalOptions="Center" Clicked="btnDel_Clicked" CommandParameter="{Binding .}"/>
+                        </DataTemplate>
+                    </syncfusion:DataGridTemplateColumn.CellTemplate>
+                </syncfusion:DataGridTemplateColumn>
+
+            </syncfusion:SfDataGrid.Columns>
+
+        </syncfusion:SfDataGrid>
+
+        <!-- Costos y Finalizar -->
+        <VerticalStackLayout Grid.Row="2" Padding="20" Spacing="20" BackgroundColor="#1C1B1B">
+            <VerticalStackLayout Spacing="10">
+                <Label x:Name="lblLocation" Text="Opciones para comer:" TextColor="#E5E2E1" FontFamily="ZalandoSans" Opacity="0.6"/>
+                <HorizontalStackLayout x:Name="btnsLocation" Spacing="10" Margin="0, 10, 0, 20">
+                    <Button x:Name="btnEatHere" Text="Sucursal" FontSize="12" BackgroundColor="#74A173" TextColor="#131313" FontFamily="ZalandoSans" CornerRadius="28" Clicked="btnEatHere_Clicked"/>
+                    <Button x:Name="btnPickUp" Text="Recoger" FontSize="12" BackgroundColor="#2A2A2A" TextColor="#E5E2E1" FontFamily="ZalandoSans" CornerRadius="28" Clicked="btnPickUp_Clicked"/>
+                    <Button x:Name="btnDelivery" Text="Domicilio" FontSize="12" BackgroundColor="#2A2A2A" TextColor="#E5E2E1" FontFamily="ZalandoSans" CornerRadius="28" Clicked="btnDelivery_Clicked"/>
+                </HorizontalStackLayout>
+                <Grid ColumnDefinitions="*, Auto">
+                    <Label Text="Subtotal" TextColor="#E5E2E1" Opacity="0.6" FontFamily="ZalandoSans"/>
+                    <Label Grid.Column="1" Text="{Binding Subtotal, StringFormat='{0:C2}'}" FontFamily="ZalandoSans" TextColor="#E5E2E1" FontAttributes="Bold"/>
+                </Grid>
+                <Grid ColumnDefinitions="*, Auto" x:Name="gdDelivFee">
+                    <Label Text="Costo de envío" TextColor="#E5E2E1" Opacity="0.6" FontFamily="ZalandoSans"/>
+                    <Label Grid.Column="1" Text="{Binding DeliveryFee, StringFormat='{0:C2}'}" FontFamily="ZalandoSans" TextColor="#E5E2E1" FontAttributes="Bold"/>
+                </Grid>
+                <Grid ColumnDefinitions="*, Auto">
+                    <Label Text="IVA (16%)" TextColor="#E5E2E1" Opacity="0.6" FontFamily="ZalandoSans"/>
+                    <Label Grid.Column="1" Text="{Binding IVA, StringFormat='{0:C2}'}" FontFamily="ZalandoSans" TextColor="#E5E2E1" FontAttributes="Bold"/>
+                </Grid>
+                <BoxView HeightRequest="1" BackgroundColor="#424940" Opacity="0.2" Margin="0,5"/>
+                <Grid ColumnDefinitions="*, Auto">
+                    <Label Text="Total" TextColor="#E5E2E1" FontSize="20" FontFamily="ZalandoSans" FontAttributes="Bold"/>
+                    <Label Grid.Column="1" Text="{Binding Total, StringFormat='{0:C2}'}" FontFamily="ZalandoSans" TextColor="#74A173" FontSize="24" FontAttributes="Bold"/>
+                </Grid>
+            </VerticalStackLayout>
+
+            <Button x:Name="btnOrder" Text="PROCEDER A PAGO" BackgroundColor="#74A173" TextColor="#131313" HeightRequest="60" CornerRadius="28" FontFamily="ZalandoSans" FontAttributes="Bold" FontSize="16" CharacterSpacing="2" Clicked="btnOrder_Clicked"/>
+        </VerticalStackLayout>
+    </Grid>
+
+</ContentPage>
