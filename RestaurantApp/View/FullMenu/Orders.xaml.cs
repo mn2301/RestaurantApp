@@ -5,7 +5,7 @@ namespace RestaurantApp;
 public partial class Orders : ContentPage
 {
     public decimal Subtotal => (decimal)AppSession.cartItems.Sum(x => x.price * x.quantity);
-    public decimal IVA => (Subtotal + DeliveryFee) * 0.16m;
+    public decimal IVA => Subtotal * 0.16m;
     public decimal DeliveryFee { get; set; } = 0m;
     public decimal Total => Subtotal + IVA + DeliveryFee;
 
