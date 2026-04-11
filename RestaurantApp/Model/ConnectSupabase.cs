@@ -12,15 +12,18 @@ namespace RestaurantApp
 {
     public class ConnectSupabase
     {
+        // Main class for connecting to Supabase
         public string sError;
         public static Supabase.Client _client;
 
+        // Method to connect to Supabase
         public async Task Connect()
         {
             try
             {
                 if (_client == null)
                 {
+                    // Initialize the Supabase client with the provided URL and key
                     var options = new Supabase.SupabaseOptions { Schema = "MakosSushi" };
                     _client = new Supabase.Client(Secrets.supabaseUrl, Secrets.supabaseKey, options);
                     await _client.InitializeAsync();
@@ -34,6 +37,7 @@ namespace RestaurantApp
             }
         }
 
+        // Method for user login, checks if the user exists and returns the user data, otherwise inserts a new user
         public async Task<UserData> UserLogin(UserData user)
         {
             try
@@ -60,6 +64,7 @@ namespace RestaurantApp
             }
         }
 
+        // Method to get menu items, returns a list of menu items ordered by name
         public async Task<List<MenuData>> GetMenuItems()
         {
             try
@@ -75,6 +80,7 @@ namespace RestaurantApp
             }
         }
 
+        // I don't use this but it says it has a reference
         public async Task<List<MenuData>> GetMenuItems(MenuData menuItem, string ogName)
         {
             try
@@ -98,6 +104,7 @@ namespace RestaurantApp
             }
         }
 
+        // Method to save an order, inserts the order data and the order details data into the database
         public async Task<bool> SaveOrder(OrderData order, List<OrderDetailsData> orderData)
         {
             try
@@ -126,6 +133,7 @@ namespace RestaurantApp
             }
         }
 
+        // Method to update the status of an order, updates the order data in the database
         public async Task<bool> UpdateStatus(OrderData order)
         {
             try

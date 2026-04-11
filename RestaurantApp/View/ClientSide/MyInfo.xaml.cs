@@ -10,6 +10,7 @@ public partial class MyInfo : ContentPage
         this.BindingContext = AppSession.CurrentUser;
     }
 
+    // Save the user's info
     private async void btnSave_Clicked(object sender, EventArgs e)
     {
         btnSave.IsEnabled = false;
@@ -20,7 +21,7 @@ public partial class MyInfo : ContentPage
         {
             if(!string.IsNullOrEmpty(enAddress.Text) && !string.IsNullOrEmpty(enPhone.Text))
             {
-                bool result = await userController.saveInfo(AppSession.CurrentUser, enAddress.Text, enPhone.Text);
+                bool result = await userController.saveInfo(AppSession.CurrentUser, enAddress.Text, enPhone.Text); // Save info
 
                 if (result)
                 {

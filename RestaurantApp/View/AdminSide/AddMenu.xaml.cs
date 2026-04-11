@@ -12,6 +12,7 @@ public partial class AddMenu : ContentPage
 		InitializeComponent();
 	}
 
+    // Modify color and visibility of characteristics options based on the selected type of menu item
     private void pkType_SelectedIndexChanged(object sender, EventArgs e)
     {
         pkType.TextColor = Color.FromArgb("#E5E2E1");
@@ -28,6 +29,7 @@ public partial class AddMenu : ContentPage
         }
     }
 
+    // Wipe radio buttons when changing type to avoid saving wrong characteristics for the menu item
     private void CleanSushiRB()
     {
         rb6.IsChecked = false;
@@ -43,6 +45,7 @@ public partial class AddMenu : ContentPage
         rbNoAlc.IsChecked = false;
     }
 
+    // Update the label with the name of the menu item as the user types it
     private void enName_TextChanged(object sender, TextChangedEventArgs e)
     {
 		if (!string.IsNullOrEmpty(enName.Text))
@@ -51,12 +54,14 @@ public partial class AddMenu : ContentPage
 		}
     }
 
+    // Save the menu item to the database
     private async void btnSave_Clicked(object sender, EventArgs e)
     {
         btnSave.IsEnabled = false;
         try
         {
-            if(!string.IsNullOrEmpty(enName.Text) && !string.IsNullOrEmpty(enDescription.Text) && !string.IsNullOrEmpty(imgFinalURL) && !string.IsNullOrEmpty(enPrice.Text) && pkType.SelectedItem.ToString() !="Seleccione")
+            // Validate that all required fields are filled
+            if (!string.IsNullOrEmpty(enName.Text) && !string.IsNullOrEmpty(enDescription.Text) && !string.IsNullOrEmpty(imgFinalURL) && !string.IsNullOrEmpty(enPrice.Text) && pkType.SelectedItem.ToString() !="Seleccione")
             {
                 string type = pkType.SelectedItem.ToString();
                 List<string> list = new List<string>();
@@ -97,6 +102,7 @@ public partial class AddMenu : ContentPage
                     }
                 }
 
+                // Create a new menu item
                 MenuData menuData = new MenuData
                 {
                     Name = enName.Text,
@@ -110,13 +116,13 @@ public partial class AddMenu : ContentPage
 
                 AdminController menuController = new AdminController();
 
-                bool result = await menuController.saveMenu(menuData);
+                bool result = await menuController.saveMenu(menuData); // Save the menu item to the database
 
                 if (result)
                 {
                     await DisplayAlertAsync("Éxito", "Guardado correctamente", "OK");
 
-                    // Limpiar campos después de guardar
+                    // Clear all fields after saving
                     enName.Text = string.Empty;
                     enDescription.Text = string.Empty;
                     enPrice.Text = string.Empty;
@@ -136,15 +142,16 @@ public partial class AddMenu : ContentPage
         }
         catch (Exception ex)
         {
-            // Manejar cualquier error que pueda ocurrir durante el guardado
             Console.WriteLine($"Error al guardar el menú: {ex.Message}");
         }
     }
 
+    // Upload an image to the database
     private async void btnUpload_Clicked(object sender, EventArgs e)
     {
         try
         {
+            // Open the file picker to select an image
             var result = await FilePicker.PickAsync(new PickOptions
             {
                 PickerTitle = "Seleccione una imagen",
@@ -156,10 +163,10 @@ public partial class AddMenu : ContentPage
 
             var stream = await result.OpenReadAsync();
 
-            imgItem.Source = ImageSource.FromStream(() => stream);
+            imgItem.Source = ImageSource.FromStream(() => stream); // Display the selected image in the UI
 
             AdminController menuController = new AdminController();
-            imgFinalURL = await menuController.saveImage(result as FileResult);
+            imgFinalURL = await menuController.saveImage(result as FileResult); // Save the image to the database and get the URL
 
         } catch(Exception ex)
         {

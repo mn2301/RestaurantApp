@@ -21,6 +21,7 @@ public partial class SalesReport : ContentPage
         pkTimePeriod.SelectedIndex = 0;
     }
 
+    // Load all orders for the selected time period
     private async Task LoadOrders(string time)
     {
         try
@@ -57,6 +58,7 @@ public partial class SalesReport : ContentPage
                     iOrders++;
                 }
 
+                // Show orders, amount of orders and total sales
                 orderGrid.ItemsSource = fullOrders;
                 lblOrder.Text = iOrders.ToString();
                 lblSales.Text = "$" + fSales.ToString("0.00");
@@ -68,6 +70,7 @@ public partial class SalesReport : ContentPage
         }
     }
 
+    // Load orders when the time period is changed
     private async void pkTimePeriod_SelectedIndexChanged(object sender, EventArgs e)
     {
         pkTimePeriod.TextColor = Color.FromArgb("#E5E2E1");
@@ -79,6 +82,7 @@ public partial class SalesReport : ContentPage
             await LoadOrders("Month");
     }
 
+    // Load the order details when the image is clicked
     private async void imgLink_Clicked(object sender, EventArgs e)
     {
         try
@@ -87,12 +91,11 @@ public partial class SalesReport : ContentPage
 
             var item = (FullOrder)image.BindingContext;
 
-            FullInfo fullInfo = new FullInfo(item); // Crear una instancia de MenuDetails pasando el menú seleccionado
+            FullInfo fullInfo = new FullInfo(item);
 
-            // Obtener el FlyoutPage y navegar dentro del NavigationPage de menuDetails
             if (Application.Current.MainPage is FlyoutPage flyout)
             {
-                await flyout.Detail.Navigation.PushAsync(fullInfo); // Navegar dentro del NavigationPage que está en el Detail
+                await flyout.Detail.Navigation.PushAsync(fullInfo);
             }
         }
         catch (Exception ex)

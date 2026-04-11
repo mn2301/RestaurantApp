@@ -19,7 +19,7 @@
                     <Image Source="{Binding clientImageURL}" Aspect="AspectFill"/>
                 </Border>
 
-                <!-- Nombre de usuario -->
+                <!-- Client name -->
                 <Label Text="{Binding clientName}" TextColor="#E5E2E1" FontSize="28" FontAttributes="Bold" FontFamily="ZalandoSans" CharacterSpacing="1" HorizontalOptions="Center"/>
             </VerticalStackLayout>
 
@@ -29,7 +29,7 @@
                     <RoundRectangle CornerRadius="28" />
                 </Border.StrokeShape>
                 <VerticalStackLayout Spacing="20">
-                    <!-- Dirección -->
+                    <!-- Address -->
                     <VerticalStackLayout Spacing="8">
                         <Label Text="DIRECCIÓN" Margin="5,0,0,0" TextColor="#74A173" FontSize="12" FontFamily="ZalandoSans" FontAttributes="Bold" CharacterSpacing="2"/>
                         <Border Padding="15" BackgroundColor="#2A2A2A" Stroke="#1C1B1B">
@@ -43,7 +43,7 @@
                         </Border>
                     </VerticalStackLayout>
 
-                    <!-- Número de teléfono -->
+                    <!-- Phone # -->
                     <VerticalStackLayout Spacing="8">
                         <Label Text="NÚMERO DE TELÉFONO" Margin="5,0,0,0" TextColor="#74A173" FontSize="12" FontFamily="ZalandoSans" FontAttributes="Bold" CharacterSpacing="2"/>
                         <Border Padding="15" BackgroundColor="#2A2A2A" Stroke="#1C1B1B">

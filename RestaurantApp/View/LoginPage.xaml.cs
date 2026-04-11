@@ -15,15 +15,17 @@ public partial class LoginPage : ContentPage
 		InitializeComponent();
     }
 
+    // Login
     private async void btnLogin_Clicked(object sender, EventArgs e)
     {
-		var loggedUser = await _googleAuthService.GetCurrentUserAsync();
+		var loggedUser = await _googleAuthService.GetCurrentUserAsync(); // Check if the user is already logged in
 
         if (loggedUser == null)
 		{
-			loggedUser = await _googleAuthService.AuthenticateAsync();
+			loggedUser = await _googleAuthService.AuthenticateAsync(); // If not, prompt the user to log in through Google
         }
 
+        // If the user is successfully logged in, create a UserData object to check or save it to the database
         UserData user = new UserData()
         {
             clientGoogleToken = loggedUser.TokenId,
@@ -39,7 +41,7 @@ public partial class LoginPage : ContentPage
         {
             AppSession.CurrentUser = dbUser;
 
-            // Open the new pag with the user info
+            // Open the new page with the user info
             MainPage mainPage = new MainPage(dbUser);
             Application.Current.MainPage = mainPage;
         }

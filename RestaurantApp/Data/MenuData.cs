@@ -6,6 +6,7 @@ using System.Text;
 
 namespace RestaurantApp
 {
+    // Model for menu table
     [Table("menu")]
     public class MenuData : BaseModel
     {

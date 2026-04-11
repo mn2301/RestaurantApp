@@ -7,9 +7,10 @@ namespace RestaurantApp.Converters
 {
     public class StringToBoolConverter : IValueConverter
     {
+        // Support class to convert a string to a boolean value for visibility purposes
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            // Si el string no es nulo ni está vacío, devuelve true (Visible)
+            // If the string is not null or whitespace, return true (Visible)
             return !string.IsNullOrWhiteSpace(value as string);
         }
 

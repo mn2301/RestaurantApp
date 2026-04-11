@@ -10,12 +10,12 @@
     <Grid RowDefinitions="*, Auto">
         <ScrollView Grid.Row="0">
             <VerticalStackLayout Padding="0, 0, 0, 20">
-                <!-- Imagen de artículo de menú -->
+                <!-- Image -->
                 <Image Source="{Binding ImageUrl}" HeightRequest="400" Aspect="AspectFill"/>
 
                 <VerticalStackLayout Padding="20" Spacing="15">
-                    <!-- Mostrar características y editar -->
-                    <!-- Cantidad de piezas, alcohólico -->
+                    <!-- Show characteristics and edit -->
+                    <!-- Number of pieces, alcoholic -->
                     <Grid ColumnDefinitions="Auto, *">
                         <HorizontalStackLayout Grid.Column="0" BindableLayout.ItemsSource="{Binding Characteristics}" Spacing="10" Margin="0, 5">
                             <BindableLayout.ItemTemplate>
@@ -37,10 +37,10 @@
                         </Image>
                     </Grid>
 
-                    <!-- Nombre -->
+                    <!-- Name -->
                     <Label Text="{Binding Name}" TextColor="#E5E2E1" FontSize="32" FontAttributes="Bold" FontFamily="ZalandoSans"/>
 
-                    <!-- Precio -->
+                    <!-- Price -->
                     <HorizontalStackLayout>
                         <Label Text="{Binding Price, StringFormat='${0:F2}'}" TextColor="#74A173" FontSize="24" FontAttributes="Bold" FontFamily="ZalandoSans"/>
                         <Label Text="•" FontFamily="ZalandoSans" TextColor="#E5E2E1" FontSize="24" FontAttributes="Bold" VerticalOptions="Start" Margin="10, 0, 0, 0" IsVisible="False">
@@ -59,11 +59,11 @@
                         </Label>
                     </HorizontalStackLayout>
                     
-                    <!-- Descripción -->
+                    <!-- Description -->
                     <Label Text="DESCRIPCIÓN" TextColor="#E5E2E1" Opacity="0.6" FontSize="12" FontFamily="ZalandoSans" CharacterSpacing="2" Margin="0, 10, 0, 0"/>
                     <Label Text="{Binding Description}" TextColor="#E5E2E1" Opacity="0.8" FontSize="16" LineHeight="1.4"/>
 
-                    <!-- Comentarios -->
+                    <!-- Comments -->
                     <Label Text="INSTRUCCIONES ADICIONALES  " TextColor="#E5E2E1" Opacity="0.6" FontSize="12" CharacterSpacing="2" FontFamily="ZalandoSans" Margin="0, 10, 0, 0"/>
                     <Border Padding="15" BackgroundColor="#1C1B1B" Stroke="#424940">
                         <Border.StrokeShape>
@@ -75,7 +75,7 @@
             </VerticalStackLayout>
         </ScrollView>
 
-        <!-- Footer fijado a la pantalla -->
+        <!-- Footer -->
         <Border Grid.Row="1" BackgroundColor="#131313" Padding="20" Stroke="#424940">
             <Border.StrokeShape>
                 <RoundRectangle CornerRadius="28" />

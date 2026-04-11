@@ -6,6 +6,7 @@ using System.Text;
 
 namespace RestaurantApp
 {
+    // Model for clients table
     [Table("clients")]
     public class UserData:BaseModel
     {

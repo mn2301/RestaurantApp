@@ -7,6 +7,7 @@ using Supabase.Postgrest.Models;
 
 namespace RestaurantApp
 {
+    // Model for order table
     [Table("order")]
     public class OrderData : BaseModel
     {
@@ -26,7 +27,7 @@ namespace RestaurantApp
         public float subtotal { get; set; }
 
         [Column("deliveryfee")]
-        public float deliveryfee { get; set; }
+        public float? deliveryfee { get; set; }
 
         [Column("iva")]
         public float iva { get; set; }

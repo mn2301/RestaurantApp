@@ -9,9 +9,9 @@
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="30">
             <ActivityIndicator x:Name="activInd" IsVisible="False" IsRunning="false" SemanticProperties.Description="Loading" Color="#74A173" />
-            <!-- Mostrar imagen y nombre -->
+            <!-- Show image and name -->
             <VerticalStackLayout HorizontalOptions="Center" Spacing="15" Margin="0, 20">
-                <!-- Imagen -->
+                <!-- Image -->
                 <Border Padding="0" WidthRequest="120" HeightRequest="120" HorizontalOptions="Center" BackgroundColor="#1C1B1B">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="60" />
@@ -20,17 +20,17 @@
                     <Image x:Name="imgItem" Aspect="AspectFill"/>
                 </Border>
 
-                <!-- Nombre de item -->
+                <!-- Item name -->
                 <Label x:Name="lblName" TextColor="#E5E2E1" FontSize="28" FontAttributes="Bold" FontFamily="ZalandoSans" CharacterSpacing="1" HorizontalOptions="Center"/>
             </VerticalStackLayout>
 
-            <!-- Información principal -->
+            <!-- Main info -->
             <Border BackgroundColor="#1C1B1B" Stroke="#1C1B1B" Padding="20">
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="28" />
                 </Border.StrokeShape>
                 <VerticalStackLayout Spacing="20">
-                    <!-- Nombre -->
+                    <!-- Name edit -->
                     <VerticalStackLayout Spacing="8">
                         <Label Text="NOMBRE" Margin="5,0,0,0" TextColor="#74A173" FontSize="12" FontFamily="ZalandoSans" FontAttributes="Bold" CharacterSpacing="2"/>
                         <Border Padding="15" BackgroundColor="#2A2A2A" Stroke="#1C1B1B">
@@ -42,7 +42,7 @@
                         </Border>
                     </VerticalStackLayout>
 
-                    <!-- Descripción -->
+                    <!-- Description edit -->
                     <VerticalStackLayout Spacing="8">
                         <Label Text="DESCRIPCIÓN" Margin="5,0,0,0" TextColor="#74A173" FontSize="12" FontFamily="ZalandoSans" FontAttributes="Bold" CharacterSpacing="2"/>
                         <Border Padding="15" BackgroundColor="#2A2A2A" Stroke="#1C1B1B">
@@ -54,7 +54,7 @@
                         </Border>
                     </VerticalStackLayout>
 
-                    <!-- Imágen -->
+                    <!-- Image edit -->
                     <VerticalStackLayout Spacing="8">
                         <Label Text="URL DE IMÁGEN" Margin="5,0,0,0" TextColor="#74A173" FontSize="12" FontFamily="ZalandoSans" FontAttributes="Bold" CharacterSpacing="2"/>
                         <Border Padding="15" BackgroundColor="#2A2A2A" Stroke="#1C1B1B">
@@ -66,9 +66,9 @@
                         </Border>
                     </VerticalStackLayout>
 
-                    <!-- Precio y  Tipo -->
+                    <!-- Price and Type -->
                     <HorizontalStackLayout>
-                        <!-- Precio -->
+                        <!-- Price -->
                         <VerticalStackLayout Spacing="8">
                             <Label Text="PRECIO" Margin="5,0,0,0" TextColor="#74A173" FontSize="12" FontFamily="ZalandoSans" FontAttributes="Bold" CharacterSpacing="2"/>
                             <Border Padding="15" BackgroundColor="#2A2A2A" Stroke="#1C1B1B" WidthRequest="150">
@@ -80,7 +80,7 @@
                             </Border>
                         </VerticalStackLayout>
 
-                        <!-- Tipo -->
+                        <!-- Type -->
                         <VerticalStackLayout Spacing="8" Margin="10,0,0,0" WidthRequest="165">
                             <Label Text="TIPO" Margin="5,0,0,0" TextColor="#74A173" FontSize="12" FontFamily="ZalandoSans" FontAttributes="Bold" CharacterSpacing="2"/>
                             <Border Padding="15" BackgroundColor="#2A2A2A" Stroke="#1C1B1B">
@@ -100,7 +100,7 @@
                         </VerticalStackLayout>
                     </HorizontalStackLayout>
 
-                    <!-- Caractrísticas -->
+                    <!-- Characteristics according to type -->
                     <VerticalStackLayout Spacing="8">
                         <Label Text="CARACTERÍSTICAS" Margin="5,0,0,0" TextColor="#74A173" FontSize="12" FontFamily="ZalandoSans" FontAttributes="Bold" CharacterSpacing="2"/>
                         <Border Padding="15" BackgroundColor="#2A2A2A" Stroke="#1C1B1B">

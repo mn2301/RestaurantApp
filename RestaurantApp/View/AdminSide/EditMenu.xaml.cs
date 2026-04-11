@@ -15,6 +15,7 @@ public partial class EditMenu : ContentPage
         ResetAll();
     }
 
+    // Reset all fields to original values
     private void ResetAll()
     {
         this.Title = "Editar " + menuData.Name;
@@ -53,10 +54,11 @@ public partial class EditMenu : ContentPage
 
     private void pkType_SelectedIndexChanged(object sender, EventArgs e)
     {
-        pkType.TextColor = Color.FromArgb("#E5E2E1");
+        pkType.TextColor = Color.FromArgb("#E5E2E1"); // Change color so it's visible in the UI
         pkChange(); 
     }
 
+    // Show or hide characteristics based on type selection
     private void pkChange()
     {
         if (pkType.SelectedIndex == 0)
@@ -73,6 +75,7 @@ public partial class EditMenu : ContentPage
         }
     }
 
+    // Clean characteristics radio buttons
     private void CleanSushiRB()
     {
         rb6.IsChecked = false;
@@ -88,6 +91,7 @@ public partial class EditMenu : ContentPage
         rbNoAlc.IsChecked = false;
     }
 
+    // Update name label
     private void enName_TextChanged(object sender, TextChangedEventArgs e)
     {
         if (!string.IsNullOrEmpty(enName.Text))
@@ -96,11 +100,13 @@ public partial class EditMenu : ContentPage
         }
     }
 
+    // Save changes to menu item
     private async void btnSave_Clicked(object sender, EventArgs e)
     {
         btnSave.IsEnabled = false;
         try
         {
+            // Validate required fields before saving
             if (!string.IsNullOrEmpty(enName.Text) && !string.IsNullOrEmpty(enDescription.Text) && !string.IsNullOrEmpty(imgFinalURL) && !string.IsNullOrEmpty(enPrice.Text) && pkType.SelectedItem.ToString() != "Seleccione")
             {
                 string type = pkType.SelectedItem.ToString();
@@ -135,6 +141,7 @@ public partial class EditMenu : ContentPage
                 else if (rbNotAv.IsChecked)
                     available = "No Disponible";
 
+                // Create a new MenuData object with the updated values
                 MenuData newMenu = new MenuData
                 {
                     Name = enName.Text,
@@ -148,12 +155,13 @@ public partial class EditMenu : ContentPage
 
                 AdminController menuController = new AdminController();
 
-                bool result = await menuController.updateMenu(newMenu, ogName);
+                bool result = await menuController.updateMenu(newMenu, ogName); // Update
 
                 if (result)
                 {
                     await DisplayAlertAsync("Éxito", "Guardado correctamente", "OK");
 
+                    // Return to the menu page
                     if (Application.Current.MainPage is FlyoutPage flyout)
                     {
                         var fullMenuPage = new FullMenu();
@@ -172,15 +180,16 @@ public partial class EditMenu : ContentPage
         }
         catch (Exception ex)
         {
-            // Manejar cualquier error que pueda ocurrir durante el guardado
             Console.WriteLine($"Error al guardar el menú: {ex.Message}");
         }
     }
 
+    // Upload image and get URL
     private async void btnUpload_Clicked(object sender, EventArgs e)
     {
         try
         {
+            // Open file picker
             var result = await FilePicker.PickAsync(new PickOptions
             {
                 PickerTitle = "Seleccione una imagen",
@@ -192,10 +201,10 @@ public partial class EditMenu : ContentPage
 
             var stream = await result.OpenReadAsync();
 
-            imgItem.Source = ImageSource.FromStream(() => stream);
+            imgItem.Source = ImageSource.FromStream(() => stream); // Show selected image in the UI
 
             AdminController menuController = new AdminController();
-            imgFinalURL = await menuController.saveImage(result as FileResult);
+            imgFinalURL = await menuController.saveImage(result as FileResult); // Save image
 
         }
         catch (Exception ex)

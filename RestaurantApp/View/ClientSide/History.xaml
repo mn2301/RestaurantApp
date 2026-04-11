@@ -14,7 +14,7 @@
             <Label Text="Historial de pedidos" TextColor="#E5E2E1" FontSize="28" FontFamily="ZalandoSans" FontAttributes="Bold"/>
         </VerticalStackLayout>
 
-        <!-- CV de cada pedido -->
+        <!-- CV for each order -->
         <CollectionView x:Name="cvOrders" Grid.Row="1">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
@@ -23,7 +23,7 @@
                             <RoundRectangle CornerRadius="28" />
                         </Border.StrokeShape>
 
-                        <!-- Fecha y estado de pedido -->
+                        <!-- Date and status -->
                         <VerticalStackLayout Spacing="15">
                             <Grid ColumnDefinitions="*, Auto">
                                 <Label Text="{Binding order.date}" Grid.Column="0" TextColor="#E5E2E1" FontFamily="ZalandoSans" FontSize="12" Opacity="0.8" VerticalOptions="Center"></Label>
@@ -35,7 +35,7 @@
                                 </Border>
                             </Grid>
 
-                            <!-- Grid (Syncfusion) de detalles del pedido -->
+                            <!-- Order details grid (Syncfusion) -->
                             <syncfusion:SfDataGrid x:Name="orderGrid" HeightRequest="{Binding GridHeight}" ItemsSource="{Binding details}" AutoGenerateColumnsMode="None" ColumnWidthMode="Fill" HeaderRowHeight="50" RowHeight="80" SelectionMode="None" BackgroundColor="Transparent" HorizontalScrollBarVisibility="Never" VerticalScrollBarVisibility="Always">
                                 <syncfusion:SfDataGrid.DefaultStyle>
                                     <syncfusion:DataGridStyle HeaderRowBackground="#1C1B1B" HeaderRowTextColor="#74A173" RowTextColor="#E5E2E1" RowFontSize="14" HeaderRowFontSize="12" HeaderRowFontAttributes="Bold"/>
@@ -67,7 +67,7 @@
                                 </syncfusion:SfDataGrid.Columns>
                             </syncfusion:SfDataGrid>
 
-                            <!-- Tipo de pedido y total -->
+                            <!-- Location and price -->
                             <Grid ColumnDefinitions="*, Auto">
                                 <VerticalStackLayout>
                                     <Label Text="{Binding order.eatlocation}" TextColor="#E5E2E1" FontFamily="ZalandoSans" Opacity="0.8" FontSize="18"/>
@@ -75,7 +75,7 @@
                                 </VerticalStackLayout>
                             </Grid>
 
-                            <!-- Botón para cancelar -->
+                            <!-- Button to cancel the order -->
                             <Button x:Name="btnCancel" Text="CANCELAR" IsVisible="{Binding IsNotCancelled}" BackgroundColor="#74A173" FontFamily="ZalandoSans" FontAttributes="Bold" TextColor="#131313" CornerRadius="28" Clicked="btnCancel_Clicked"/>
                         </VerticalStackLayout>
                     </Border>

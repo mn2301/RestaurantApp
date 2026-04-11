@@ -14,7 +14,7 @@ namespace RestaurantApp
 
         public async Task<bool> checkUserAddress(UserData client) 
         { 
-            return await connectUser.CheckUserAdress(client);
+            return await connectUser.CheckUserAddress(client);
         }
 
         public async Task<List<OrderData>> getOrders( UserData client )

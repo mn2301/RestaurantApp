@@ -21,9 +21,10 @@ namespace RestaurantApp.Platforms.Android
         {
         }
 
+        // Make sure to initialize the GoogleSignInClient only once and subscribe to the event only once
         private void EnsureInitialized()
         {
-            // Solo inicializamos si _googleSignInClient es nulo
+            // Only initialize if the client is null
             if (_googleSignInClient == null)
             {
                 _activity = Platform.CurrentActivity;
@@ -40,13 +41,13 @@ namespace RestaurantApp.Platforms.Android
 
                 _googleSignInClient = GoogleSignIn.GetClient(_activity, _gso);
 
-                // Suscribirse al evento solo una vez
+                // Subscribe to the event only once
                 MainActivity.ResultGoogleAuth -= MainActivity_ResultGoogleAuth;
                 MainActivity.ResultGoogleAuth += MainActivity_ResultGoogleAuth;
             }
         }
 
-
+        // Authenticate the user that signs in with Google and return a GoogleUserDTO with the user's information
         public Task<GoogleUserDTO> AuthenticateAsync()
         {
             EnsureInitialized();
@@ -59,6 +60,7 @@ namespace RestaurantApp.Platforms.Android
 
         }
 
+        // Handle the result of the Google sign in
         private void MainActivity_ResultGoogleAuth(object sender, (bool Success, GoogleSignInAccount Account) e)
         {
             if (e.Success)
@@ -84,6 +86,7 @@ namespace RestaurantApp.Platforms.Android
 
         }
 
+        // Get the current signed in user
         public async Task<GoogleUserDTO> GetCurrentUserAsync()
         {
             try
@@ -106,6 +109,7 @@ namespace RestaurantApp.Platforms.Android
             }
         }
 
+        // Logout
         public Task LogoutAsync() => _googleSignInClient.SignOutAsync();
 
     }

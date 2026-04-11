@@ -15,11 +15,6 @@ namespace RestaurantApp.Controller
             return await connectSupabase.GetMenuItems();
         }
 
-        public async Task<List<MenuData>> getMenuItems(MenuData menuItem, string ogName)
-        {
-            return await connectSupabase.GetMenuItems(menuItem, ogName);
-        }
-
         public async Task<bool> SaveOrder(OrderData order, List<OrderDetailsData> orderData)
         {
             return await connectSupabase.SaveOrder(order, orderData);

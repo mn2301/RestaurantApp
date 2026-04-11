@@ -17,10 +17,12 @@ public partial class FlyoutMenuPage : ContentPage
         logout();
     }
 
+    // User logout
     private async void logout()
     {
         await _googleAuthService?.LogoutAsync();
         AppSession.cartItems.Clear();
+
         LoginPage mainPage = new LoginPage();
         Application.Current.MainPage = mainPage;
     }

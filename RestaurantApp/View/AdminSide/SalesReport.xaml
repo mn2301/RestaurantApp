@@ -6,9 +6,12 @@
              Title="Reporte de ventas"
              BackgroundColor="#131313">
 
-    <Grid RowDefinitions="Auto, Auto, Auto" Padding="16">
-        <!-- Filtro de fecha -->
-        <HorizontalStackLayout Grid.Row="0">
+    <Grid RowDefinitions="Auto, Auto, Auto, Auto" Padding="16">
+        <HorizontalStackLayout Grid.Row="0" HorizontalOptions="Center" Margin="0,10,0,0">
+            <Label Text="Reportes" TextColor="#E5E2E1" FontSize="28" FontFamily="ZalandoSans" FontAttributes="Bold"/>
+        </HorizontalStackLayout>
+        <!-- Date filter -->
+        <HorizontalStackLayout Grid.Row="1">
             <Label Text="MOSTRAR LA INFORMACIÓN DE:" VerticalOptions="Center" TextColor="#74A173" FontSize="12" FontFamily="ZalandoSans" Margin="0,0,10,0"/>
             <Border Padding="10, 1" BackgroundColor="#2A2A2A" Stroke="#1C1B1B">
                 <Border.StrokeShape>
@@ -28,8 +31,8 @@
         </HorizontalStackLayout>
         
         <!-- KPI -->
-        <HorizontalStackLayout Grid.Row="1" Spacing="15" HorizontalOptions="Center" Margin="0,20,0,0">
-            <!-- # de ordenes -->
+        <HorizontalStackLayout Grid.Row="2" Spacing="15" HorizontalOptions="Center" Margin="0,20,0,0">
+            <!-- Amount of orders -->
             <Border Padding="15" BackgroundColor="#2A2A2A" HeightRequest="80" Stroke="#1C1B1B">
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="20" />
@@ -41,7 +44,7 @@
                 </VerticalStackLayout>
             </Border>
 
-            <!-- Ingreso de ventas -->
+            <!-- Sales -->
             <Border Padding="15" BackgroundColor="#2A2A2A" HeightRequest="80" Stroke="#1C1B1B">
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="20" />
@@ -54,13 +57,13 @@
             </Border>
         </HorizontalStackLayout>
 
-        <!-- Grid (Syncfusion) de ordenes -->
-        <Border Grid.Row="2" BackgroundColor="#2A2A2A" HeightRequest="600" Stroke="#1C1B1B" Margin="0,20,0,0">
+        <!-- Orders grid (Syncfusion) -->
+        <Border Grid.Row="3" BackgroundColor="#2A2A2A" HeightRequest="550" Stroke="#1C1B1B" Margin="0,20,0,0">
             <Border.StrokeShape>
                 <RoundRectangle CornerRadius="20" />
             </Border.StrokeShape>
             
-            <syncfusion:SfDataGrid x:Name="orderGrid" HeightRequest="600" AutoGenerateColumnsMode="None" ColumnWidthMode="FitByCell"  HeaderRowHeight="50" RowHeight="80" SelectionMode="None" BackgroundColor="Transparent" HorizontalScrollBarVisibility="Always" VerticalScrollBarVisibility="Always">
+            <syncfusion:SfDataGrid x:Name="orderGrid" HeightRequest="550" AutoGenerateColumnsMode="None" ColumnWidthMode="FitByCell"  HeaderRowHeight="50" RowHeight="80" SelectionMode="None" BackgroundColor="Transparent" HorizontalScrollBarVisibility="Always" VerticalScrollBarVisibility="Always">
                 <syncfusion:SfDataGrid.DefaultStyle>
                     <syncfusion:DataGridStyle HeaderRowBackground="#1C1B1B" HeaderRowTextColor="#74A173" RowTextColor="#E5E2E1" HeaderRowFontSize="12" HeaderRowFontAttributes="Bold"/>
                 </syncfusion:SfDataGrid.DefaultStyle>

@@ -1,12 +1,15 @@
 using Android.Service.Voice;
 using RestaurantApp.Controller;
+using RestaurantApp.Services;
+using System.Collections.ObjectModel;
+using System.Drawing;
 
 namespace RestaurantApp;
 
 public partial class OrderInfo : ContentPage
 {
     List<OrderData> orders = new List<OrderData>();
-    List<FullOrder> fullOrders = new List<FullOrder>();
+    ObservableCollection<FullOrder> observableOrders = new ObservableCollection<FullOrder>();
 
     public OrderInfo()
 	{
@@ -17,29 +20,30 @@ public partial class OrderInfo : ContentPage
     {
         base.OnAppearing();
         pkOrders.SelectedIndex = 0;
-        await LoadUserOrders();
+
+        orderGrid.ItemsSource = observableOrders;
     }
 
+    // Load today's orders that need to be processed
     private async Task LoadUserOrders()
     {
         try
         {
-            fullOrders.Clear();
-            cvOrders.ItemsSource = null;
+            observableOrders.Clear();
             AdminController adminController = new AdminController();
             DateTime dtToday = DateTime.Now;
 
-            orders = await adminController.getOrders(dtToday);
+            orders = await adminController.getOrders(dtToday); // Get orders
 
             if (orders != null)
             {
                 foreach (var order in orders)
                 {
-                    if(order.status != "Entregado")
+                    if(order.status != "Entregado" && order.status != "Cancelado")
                     {
                         var orderDetails = await adminController.getOrderDetails(order);
                         var clientDetails = await adminController.getClientDetails(order);
-                        fullOrders.Add(new FullOrder
+                        observableOrders.Add(new FullOrder
                         {
                             order = order,
                             details = orderDetails,
@@ -47,8 +51,6 @@ public partial class OrderInfo : ContentPage
                         });
                     }
                 }
-
-                cvOrders.ItemsSource = fullOrders;
             }
         }
         catch (Exception ex)
@@ -57,12 +59,12 @@ public partial class OrderInfo : ContentPage
         }
     }
 
+    // Load today's orders that are either delivered or cancelled
     private async Task LoadUserFinishedOrders()
     {
         try
         {
-            fullOrders.Clear();
-            cvOrders.ItemsSource = null;
+            observableOrders.Clear();
             AdminController adminController = new AdminController();
             DateTime dtToday = DateTime.Now;
 
@@ -76,7 +78,7 @@ public partial class OrderInfo : ContentPage
                     {
                         var orderDetails = await adminController.getOrderDetails(order);
                         var clientDetails = await adminController.getClientDetails(order);
-                        fullOrders.Add(new FullOrder
+                        observableOrders.Add(new FullOrder
                         {
                             order = order,
                             details = orderDetails,
@@ -84,8 +86,6 @@ public partial class OrderInfo : ContentPage
                         });
                     }
                 }
-
-                cvOrders.ItemsSource = fullOrders;
             }
         }
         catch (Exception ex)
@@ -94,48 +94,10 @@ public partial class OrderInfo : ContentPage
         }
     }
 
-    private async void btnStatusChange(string newStatus, object sender, EventArgs e)
-    {
-        try
-        {
-            // Obtener el botón que disparó el evento
-            var button = (Button)sender;
-
-            // Obtener el modelo de datos asociado al botón
-            var selectedItem = (FullOrder)button.BindingContext;
-
-            if (selectedItem != null && selectedItem.order.status != newStatus)
-            {
-                GlobalController globalController = new GlobalController();
-                string oldStatus = selectedItem.order.status;
-                selectedItem.order.status = newStatus;
-
-                if (await globalController.updateStatus(selectedItem.order))
-                {
-                    selectedItem.RefreshStatus();
-                }
-                else
-                {
-                    selectedItem.order.status = oldStatus;
-                    await DisplayAlertAsync("Error", "No se pudo actualizar en el servidor", "OK");
-                }
-            }
-        }
-        catch (Exception ex)
-        {
-            await DisplayAlertAsync("Error", "No pudimos cambiar el estado del pedido", "OK");
-        }
-    }
-
-    private void btnInProcess_Clicked(object sender, EventArgs e) => btnStatusChange("En preparación", sender, e);
-
-    private void btnSent_Clicked(object sender, EventArgs e) => btnStatusChange("Enviado", sender, e);
-
-    private void btnDelivered_Clicked(object sender, EventArgs e) => btnStatusChange("Entregado", sender, e);
-
+    // Load orders based on picker selection
     private async void pkOrders_SelectedIndexChanged(object sender, EventArgs e)
     {
-        pkOrders.TextColor = Color.FromArgb("#E5E2E1");
+        pkOrders.TextColor = Microsoft.Maui.Graphics.Color.FromArgb("#E5E2E1");
         if(pkOrders.SelectedIndex == 0) 
         {
             await LoadUserOrders();
@@ -143,6 +105,29 @@ public partial class OrderInfo : ContentPage
         else
         {
             await LoadUserFinishedOrders();
+        }
+    }
+
+    // Navigate to order details page when clicking on the image
+    private async void imgLink_Clicked(object sender, EventArgs e)
+    {
+        try
+        {
+            var image = (Image)sender;
+
+            var item = (FullOrder)image.BindingContext;
+
+            OrderInfoDetails fullInfo = new OrderInfoDetails(item); // Create an instance of OrderInfoDetails with the selected order
+
+            // Get the FlyoutPage and navigate within the NavigationPage of menuDetails
+            if (Application.Current.MainPage is FlyoutPage flyout)
+            {
+                await flyout.Detail.Navigation.PushAsync(fullInfo); // Navigate within the NavigationPage that is in the Detail
+            }
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlertAsync("Error", "No se pudo abrir la pantalla", "OK");
         }
     }
 }

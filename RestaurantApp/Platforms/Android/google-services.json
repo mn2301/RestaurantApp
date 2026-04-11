@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "252865484826",
+    "project_id": "restaurantnotis",
+    "storage_bucket": "restaurantnotis.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:252865484826:android:d1c4ac069e19e71e0dd9a3",
+        "android_client_info": {
+          "package_name": "com.restaurantapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZa37rnQEbCtp6PXYc4o_ilbpJcqh5SgA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

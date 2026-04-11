@@ -20,6 +20,7 @@ public partial class FullMenu : ContentPage
         LoadMenu();
     }
 
+    // Load full menu
     private async void LoadMenu()
     {
         try
@@ -38,6 +39,7 @@ public partial class FullMenu : ContentPage
     private void btnSushiMenu_Clicked(object sender, EventArgs e) => FilterMenu("Sushi", (Button)sender);
     private void btnDrinkMenu_Clicked(object sender, EventArgs e) => FilterMenu("Drink", (Button)sender);
 
+    // Filter menu by type
     private void FilterMenu(string type, Button selectedButton)
     {
         // Filtrar la lista
@@ -58,28 +60,30 @@ public partial class FullMenu : ContentPage
         selectedButton.TextColor = Color.FromArgb("#131313");
     }
 
+    // Open a details page when selecting a menu item
     private void cvSushiMenu_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        ((CollectionView)sender).SelectedItem = null; // Eliminar el color de selección del CollectionView
-        var selectedItem = e.CurrentSelection.FirstOrDefault() as MenuData; // Obtener el item seleccionado
+        ((CollectionView)sender).SelectedItem = null; // Get rid of selection highlight
+        var selectedItem = e.CurrentSelection.FirstOrDefault() as MenuData; // Obtain the selected item
 
-        if (selectedItem != null) // Verificar que se haya seleccionado un item del menú
+        if (selectedItem != null)
         {
-            NavigateToMenuDetails(selectedItem, sender); // Abrir la pantalla de detalles del platillo
+            NavigateToMenuDetails(selectedItem, sender); // Open the details page for the selected menu item
         }
     }
 
+    // Navigate to the details page for the selected menu item
     private async void NavigateToMenuDetails(MenuData menuItem, object sender)
     {
-        MenuDetails menuDetails = new MenuDetails(menuItem); // Crear una instancia de MenuDetails pasando el menú seleccionado
+        MenuDetails menuDetails = new MenuDetails(menuItem);
 
-        // Obtener el FlyoutPage y navegar dentro del NavigationPage de menuDetails
         if (Application.Current.MainPage is FlyoutPage flyout)
         {
-            await flyout.Detail.Navigation.PushAsync(menuDetails); // Navegar dentro del NavigationPage que está en el Detail
+            await flyout.Detail.Navigation.PushAsync(menuDetails); 
         }
     }
 
+    // Open the cart page when tapping the cart icon
     private void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
     {
         Orders cart = new Orders();
@@ -89,14 +93,15 @@ public partial class FullMenu : ContentPage
         }
     }
 
+    // Add the selected menu item to the cart
     private void btnAddToCart_Clicked(object sender, EventArgs e)
     {
         try
         {
-            // Obtener el botón que disparó el evento
+            // Obtain the button that was clicked
             var button = (Button)sender;
 
-            // Obtener el modelo de datos asociado al botón
+            // Obtain the menu item associated with that button
             var selectedItem = (MenuData)button.BindingContext;
 
             if (selectedItem != null && selectedItem.Availability == "Disponible")
@@ -106,12 +111,12 @@ public partial class FullMenu : ContentPage
 
                 if (existingItem != null)
                 {
-                    // Si existe, solo aumentamos la cantidad
+                    // If the item already exists in the cart, increase its quantity
                     existingItem.quantity ++;
                 }
                 else
                 {
-                    // Si no existe, agregamos el nuevo producto
+                    // If the item doesn't exist in the cart, add it as a new entry
                     AppSession.cartItems.Add(new CartItems
                     {
                         menuID = selectedItem.id,
@@ -132,9 +137,10 @@ public partial class FullMenu : ContentPage
         }
     }
 
+    // Update the cart item count displayed on the cart icon
     private void UpdateCartNum()
     {
-        // Calcular el total de items
+        // Get total item count
         int totalItems = AppSession.cartItems.Sum(x => x.quantity);
 
         if (totalItems > 0)

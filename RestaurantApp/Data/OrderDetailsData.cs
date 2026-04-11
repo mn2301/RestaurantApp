@@ -6,6 +6,7 @@ using Supabase.Postgrest.Models;
 
 namespace RestaurantApp
 {
+    // Model for order details table
     [Table("orderdetails")]
     public class OrderDetailsData : BaseModel
     {

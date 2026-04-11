@@ -364,3 +364,17 @@ FodyWeavers.xsd
 
 # Secretos de Supabase
 RestaurantApp/Helpers/Secrets.cs
+
+# Archivos de publicación y paquetes NuGet
+publish/
+packages/
+
+# Carpetas de compilación
+bin/
+obj/
+
+# Archivos de usuario de Visual Studio
+.vs/
+*.user
+*.userosscache
+*.sln.docstates

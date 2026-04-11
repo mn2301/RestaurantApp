@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:syncfusion="clr-namespace:Syncfusion.Maui.DataGrid;assembly=Syncfusion.Maui.DataGrid"
              xmlns:converters="clr-namespace:RestaurantApp.Converters"
-             x:Class="RestaurantApp.FullInfo"
+             x:Class="RestaurantApp.OrderInfoDetails"
              Title="Información de Pedido"
              BackgroundColor="#131313">
 
@@ -58,11 +58,27 @@
                         </syncfusion:SfDataGrid.Columns>
                     </syncfusion:SfDataGrid>
 
+                    <!-- Location and address -->
+                    <Grid ColumnDefinitions="*, Auto">
+                        <VerticalStackLayout>
+                            <Label Text="{Binding order.eatlocation}" TextColor="#74A173" Opacity="0.8" FontFamily="ZalandoSans" FontAttributes="Bold" FontSize="20"/>
+                            <Label Text="{Binding users.clientAddress}" IsVisible="{Binding IsDelivery}" TextColor="#E5E2E1" FontFamily="ZalandoSans" Opacity="0.8" FontSize="15"/>
+                        </VerticalStackLayout>
+                    </Grid>
+
                     <!-- Price -->
                     <Label x:Name="lblSubtotal" TextColor="#E5E2E1" FontFamily="ZalandoSans" FontSize="14" Opacity="0.8"/>
                     <Label x:Name="lblDelivery" TextColor="#E5E2E1" FontFamily="ZalandoSans" FontSize="14" Opacity="0.8"/>
                     <Label x:Name="lblIVA" TextColor="#E5E2E1" FontFamily="ZalandoSans" FontSize="14" Opacity="0.8"/>
                     <Label x:Name="lblTotal" TextColor="#E5E2E1" FontFamily="ZalandoSans" FontSize="22"/>
+
+                    <!-- Buttons to update order status -->
+                    <VerticalStackLayout x:Name="vslButtons">
+                        <Label Text="Marcar como:" IsVisible="{Binding IsFinalized}" TextColor="#E5E2E1" FontFamily="ZalandoSans" Opacity="0.8" FontSize="15"/>
+                        <Button x:Name="btnInProcess" Text="EN PREPARACIÓN" IsVisible="{Binding IsInProcess}" BackgroundColor="#74A173" FontFamily="ZalandoSans" FontAttributes="Bold" TextColor="#131313" CornerRadius="28" Clicked="btnInProcess_Clicked"/>
+                        <Button x:Name="btnSent" Text="ENVIADO" IsVisible="{Binding IsSent}" BackgroundColor="#74A173" FontFamily="ZalandoSans" FontAttributes="Bold" TextColor="#131313" CornerRadius="28" Clicked="btnSent_Clicked"/>
+                        <Button x:Name="btnDelivered" Text="ENTREGADO" IsVisible="{Binding IsDelivered}" BackgroundColor="#74A173" FontFamily="ZalandoSans" FontAttributes="Bold" TextColor="#131313" CornerRadius="28" Clicked="btnDelivered_Clicked"/>
+                    </VerticalStackLayout>
                 </VerticalStackLayout>
             </Border>
         </VerticalStackLayout>

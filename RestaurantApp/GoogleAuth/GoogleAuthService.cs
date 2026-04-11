@@ -4,6 +4,6 @@ namespace RestaurantApp.Platforms.Android
 {
     public partial class GoogleAuthService : IGoogleAuthService
     {
-        private const string WebApiKey = Secrets.WebApiKey;
+        private const string WebApiKey = Secrets.WebApiKey; // Obtain my Web API Key from Secrets
     }
 }

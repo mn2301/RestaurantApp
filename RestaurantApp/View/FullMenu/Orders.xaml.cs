@@ -1,9 +1,11 @@
 using RestaurantApp.Controller;
+using RestaurantApp.Services;
 
 namespace RestaurantApp;
 
 public partial class Orders : ContentPage
 {
+    // Properties to bind to the UI
     public decimal Subtotal => (decimal)AppSession.cartItems.Sum(x => x.price * x.quantity);
     public decimal IVA => Subtotal * 0.16m;
     public decimal DeliveryFee { get; set; } = 0m;
@@ -16,12 +18,12 @@ public partial class Orders : ContentPage
 		InitializeComponent();
         this.BindingContext = this;
         cartGrid.ItemsSource = AppSession.cartItems;
-        if(AppSession.CurrentUser.clientType == "admin")
+        location = "Sucursal";
+        if (AppSession.CurrentUser.clientType == "admin")
         {
             lblLocation.IsVisible = false;
             btnsLocation.IsVisible = false;
             gdDelivFee.IsVisible = false;
-            location = "Sucursal";
         }
     }
 
@@ -31,6 +33,7 @@ public partial class Orders : ContentPage
         UpdateTotal();
     }
 
+    // Update totals on the UI
     private void UpdateTotal()
     {
         OnPropertyChanged(nameof(Subtotal));
@@ -38,6 +41,7 @@ public partial class Orders : ContentPage
         OnPropertyChanged(nameof(IVA));
     }
 
+    // Delete an item from the cart
     private void btnDel_Clicked(object sender, EventArgs e)
     {
         try
@@ -55,6 +59,7 @@ public partial class Orders : ContentPage
         }
     }
 
+    // Increase quantity of an item
     private void btnAdd_Clicked(object sender, EventArgs e)
     {
         var item = (CartItems)((Button)sender).CommandParameter;
@@ -62,6 +67,7 @@ public partial class Orders : ContentPage
         UpdateTotal();
     }
 
+    // Decrease quantity of an item
     private void btnLess_Clicked(object sender, EventArgs e)
     {
         var item = (CartItems)((Button)sender).CommandParameter;
@@ -78,6 +84,7 @@ public partial class Orders : ContentPage
 
     private void btnDelivery_Clicked(object sender, EventArgs e) => EatingLocation("Domicilio", (Button)sender);
 
+    // Handle eating location selection and update fees
     private void EatingLocation(string type, Button selectedButton)
     {
         if (type == "Domicilio")
@@ -91,7 +98,7 @@ public partial class Orders : ContentPage
 
         ResetButtonColor();
 
-        // Modificar color de botón seleccionado
+        // Modify selected button colors
         selectedButton.BackgroundColor = Color.FromArgb("#74A173");
         selectedButton.TextColor = Color.FromArgb("#131313");
         location = selectedButton.Text;
@@ -99,7 +106,7 @@ public partial class Orders : ContentPage
 
     private void ResetButtonColor()
     {
-        // Resetear colores de botones
+        // Reset button colors
         var normalBg = Color.FromArgb("#2A2A2A");
         var normalText = Color.FromArgb("#E5E2E1");
 
@@ -107,13 +114,13 @@ public partial class Orders : ContentPage
         btnDelivery.TextColor = btnEatHere.TextColor = btnPickUp.TextColor = normalText;
     }
 
+    // Save order
     private async void btnOrder_Clicked(object sender, EventArgs e)
     {
         try
         {
-            string here = location;
-
-            if(AppSession.CurrentUser.clientType == "client" && location == "Domicilio")
+            // Check if user (client) has an address if they choose delivery
+            if (AppSession.CurrentUser.clientType == "client" && location == "Domicilio")
             {
                 UserController userController = new UserController();
                 var result = await userController.checkUserAddress(AppSession.CurrentUser);
@@ -124,6 +131,9 @@ public partial class Orders : ContentPage
                 }
             }
 
+            btnOrder.IsEnabled = false;
+
+            // Create order data
             OrderData order = new OrderData
             {
                 userid = AppSession.CurrentUser.id,
@@ -136,6 +146,7 @@ public partial class Orders : ContentPage
                 status = "Ordenado"
             };
 
+            // Create order details list
             List<OrderDetailsData> orderDetailsList = new List<OrderDetailsData>();
             foreach (var item in AppSession.cartItems)
             {
@@ -151,14 +162,21 @@ public partial class Orders : ContentPage
             }
 
             GlobalController globalController = new GlobalController();
-            if (await globalController.SaveOrder(order, orderDetailsList))
+            if (await globalController.SaveOrder(order, orderDetailsList)) // Save order and details to the database
             {
                 await DisplayAlertAsync("Éxito", "Tu orden ha sido realizada con éxito.", "OK");
+
+                // Clear cart and reset UI
                 AppSession.cartItems.Clear();
                 UpdateTotal();
                 ResetButtonColor();
                 btnEatHere.BackgroundColor = Color.FromArgb("#74A173");
                 btnEatHere.TextColor = Color.FromArgb("#131313");
+                btnOrder.IsEnabled = true;
+
+                // Send notification to admin about new order
+                var notify = new NotificationService();
+                _ = notify.SendNotification("admin", "¡Pedido nuevo!", $"Orden nueva de {AppSession.CurrentUser.clientName}");
             } else
             {
                 await DisplayAlertAsync("Error", "Ocurrió un error al realizar tu orden, por favor intenta de nuevo.", "OK");

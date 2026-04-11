@@ -5,21 +5,21 @@ namespace RestaurantApp;
 public partial class MenuDetails : ContentPage
 {
 	MenuData selectedMenuItem;
-    string ogName = "";
 
+    // Add menu item details to the page and set the title to the menu item name
     public MenuDetails(MenuData menuItem)
 	{
 		selectedMenuItem = menuItem;
 		InitializeComponent();
         this.BindingContext = selectedMenuItem;
         this.Title = selectedMenuItem.Name;
-        ogName = selectedMenuItem.Name;
         if (AppSession.CurrentUser.clientType == "client")
             imgEdit.IsVisible = false;
         else
             imgEdit.IsVisible = true;
     }
 
+    // Add quantity of the menu item to be added to the cart, with a minimum of 1
     private void btnLess_Clicked(object sender, EventArgs e)
     {
         if(lblAmount.Text != "1")
@@ -33,6 +33,7 @@ public partial class MenuDetails : ContentPage
         }
     }
 
+    // Add quantity of item to be added to the cart
     private void btnMore_Clicked(object sender, EventArgs e)
     {
         int curentAmount = int.Parse(lblAmount.Text);
@@ -42,15 +43,16 @@ public partial class MenuDetails : ContentPage
             btnLess.IsEnabled = true;
         }
     }
-
+    
+    // Add menu item to the cart
     private void btnAddToCart_Clicked(object sender, EventArgs e)
     {
         try
         {
-            // Obtener el botón que disparó el evento
+            // Obtain the button that was clicked
             var button = (Button)sender;
 
-            // Obtener el modelo de datos asociado al botón
+            // Obttain the menu item associated with the button using the BindingContext
             var selectedItem = (MenuData)button.BindingContext;
 
             if (selectedItem != null && selectedItem.Availability == "Disponible")
@@ -60,12 +62,12 @@ public partial class MenuDetails : ContentPage
 
                 if (existingItem != null)
                 {
-                    // Si existe, solo aumentar la cantidad
+                    // If it exists, increase the quantity
                     existingItem.quantity++;
                 }
                 else
                 {
-                    // Si no existe, agregar el nuevo producto
+                    // If it doesn't exist, add a new item to the cart
                     AppSession.cartItems.Add(new CartItems
                     {
                         menuID = selectedItem.id,
@@ -84,6 +86,7 @@ public partial class MenuDetails : ContentPage
         }
     }
 
+    // Navigate to the EditMenu page, passing the selected menu item as a parameter
     private void imgEdit_Tapped(object sender, TappedEventArgs e)
     {
         try
