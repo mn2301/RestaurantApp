@@ -7,6 +7,12 @@
              Title="Información de Pedido"
              BackgroundColor="#131313">
 
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:StringToBoolConverter x:Key="StringToBoolConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="30">
             <!-- Client, location, and date -->
