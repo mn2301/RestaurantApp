@@ -63,7 +63,6 @@ namespace RestaurantApp
                 Console.WriteLine("Permiso de notificaciones denegado.");
             }
 #endif
-            // Agregar esto para que en otras plataformas no marque error
             await System.Threading.Tasks.Task.CompletedTask;
         }
 
